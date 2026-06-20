@@ -1,44 +1,77 @@
 import Link from 'next/link'
+import { ArrowRight, CheckCircle2, FileText, RadioTower, Search } from 'lucide-react'
 import { SITE_CONFIG } from '@/lib/site-config'
 import { pagesContent } from '@/editable/content/pages.content'
 import { EditableSiteShell } from '@/editable/shell/EditableSiteShell'
 
+const capabilities = [
+  { icon: FileText, title: 'Release Structure', body: 'Clear titles, summaries, categories, and source context keep every announcement press-ready.' },
+  { icon: RadioTower, title: 'Distribution Flow', body: 'Posts move into archive, search, related content, and detail pages without confusing readers.' },
+  { icon: Search, title: 'Discovery System', body: 'Visitors can filter, search, and browse live updates by topic, organization, or campaign.' },
+]
+
 export default function AboutPage() {
   return (
     <EditableSiteShell>
-      <main className="bg-[#f7f4ef] text-[#111]">
-        <section className="border-b border-black bg-[#c92f2f] text-white">
-          <div className="mx-auto max-w-[var(--editable-container)] px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-            <p className="text-xs font-black uppercase tracking-[0.28em]">{pagesContent.about.badge}</p>
-            <h1 className="editorial-brand mt-5 max-w-5xl text-6xl font-black leading-[0.92] tracking-[-0.055em] sm:text-8xl">
-              Independent media, built for clear stories.
-            </h1>
+      <main className="media-shell page-fade text-[var(--slot4-page-text)]">
+        <section className="bg-white">
+          <div className="media-container grid gap-10 py-14 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:py-20">
+            <div className="hero-reveal">
+              <p className="section-kicker">{pagesContent.about.badge}</p>
+              <h1 className="mt-5 max-w-4xl text-5xl font-black leading-[.98] tracking-[-.055em] sm:text-6xl">{pagesContent.about.title}</h1>
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--slot4-muted-text)]">{pagesContent.about.description}</p>
+            </div>
+            <div className="reveal-up rounded-lg bg-[linear-gradient(135deg,#e8f8df,#ffffff_55%,#dff8ff)] p-8 shadow-[0_24px_80px_rgba(20,34,53,.1)]">
+              <p className="section-kicker">Operating promise</p>
+              <h2 className="mt-4 text-4xl font-black tracking-[-.04em]">Make public updates easier to publish, browse, and trust.</h2>
+              <div className="mt-6 grid gap-3">
+                {['Live content stays connected to real posts.', 'Layouts stay readable on desktop and mobile.', 'Branding comes from the site configuration.'].map((item) => (
+                  <div key={item} className="flex items-center gap-3 rounded-lg bg-white p-4 text-sm font-bold">
+                    <CheckCircle2 className="h-5 w-5 text-[var(--slot4-green)]" /> {item}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
-        <section className="mx-auto grid max-w-[var(--editable-container)] border-x border-black bg-white lg:grid-cols-[1.45fr_0.55fr]">
-          <article className="border-b border-black p-7 sm:p-10 lg:border-b-0 lg:border-r lg:p-16">
-            <p className="text-sm font-black uppercase tracking-[0.2em] text-[#c92f2f]">About {SITE_CONFIG.name}</p>
-            <p className="editorial-serif mt-6 text-3xl font-bold leading-[1.25] sm:text-4xl">{pagesContent.about.description}</p>
-            <div className="article-content mt-10 space-y-6">
+        <section className="media-container grid gap-8 py-14 lg:grid-cols-[.8fr_1.2fr] lg:py-18">
+          <article className="reveal-up rounded-lg bg-white p-7 shadow-[0_18px_55px_rgba(20,34,53,.08)] sm:p-9">
+            <p className="section-kicker">About {SITE_CONFIG.name}</p>
+            <div className="article-content mt-6">
               {pagesContent.about.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             </div>
           </article>
-          <aside className="grid bg-[#f7f4ef]">
+          <div className="grid gap-5 md:grid-cols-3 lg:grid-cols-1">
             {pagesContent.about.values.map((value, index) => (
-              <div key={value.title} className="border-b border-black p-7 last:border-b-0 sm:p-9">
-                <p className="text-xs font-black uppercase tracking-[0.2em] text-[#c92f2f]">0{index + 1}</p>
-                <h2 className="editorial-serif mt-4 text-3xl font-black leading-tight">{value.title}</h2>
-                <p className="mt-4 text-sm leading-7 text-black/65">{value.description}</p>
+              <div key={value.title} className="media-card stagger-card rounded-lg p-6">
+                <p className="text-xs font-black uppercase tracking-[0.18em] text-[var(--slot4-coral)]">0{index + 1}</p>
+                <h2 className="mt-4 text-2xl font-black tracking-[-.04em]">{value.title}</h2>
+                <p className="mt-3 text-sm leading-7 text-[var(--slot4-muted-text)]">{value.description}</p>
               </div>
             ))}
-          </aside>
+          </div>
         </section>
 
-        <section className="border-y border-black bg-[#171717] text-white">
-          <div className="mx-auto flex max-w-[var(--editable-container)] flex-col gap-6 px-4 py-12 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
-            <h2 className="editorial-brand max-w-3xl text-4xl font-black leading-none sm:text-5xl">Read the stories shaping the conversation.</h2>
-            <Link href="/search" className="inline-flex w-fit bg-[#c92f2f] px-6 py-4 text-xs font-black uppercase tracking-[0.18em]">Explore the archive</Link>
+        <section className="bg-white">
+          <div className="media-container py-14">
+            <div className="text-center reveal-up">
+              <p className="section-kicker">What the platform supports</p>
+              <h2 className="mt-3 text-4xl font-black tracking-[-.045em]">A practical media distribution stack</h2>
+              <div className="section-rule" />
+            </div>
+            <div className="mt-10 grid gap-5 md:grid-cols-3">
+              {capabilities.map(({ icon: Icon, title, body }) => (
+                <div key={title} className="media-card stagger-card rounded-lg p-7 text-center">
+                  <Icon className="mx-auto h-9 w-9 text-[var(--slot4-accent)]" />
+                  <h3 className="mt-5 text-xl font-black tracking-[-.03em]">{title}</h3>
+                  <p className="mt-3 text-sm leading-7 text-[var(--slot4-muted-text)]">{body}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-10 text-center">
+              <Link href={SITE_CONFIG.taskViews.mediaDistribution || '/media-distribution'} className="inline-flex items-center gap-2 rounded-lg bg-[var(--slot4-coral)] px-7 py-3.5 text-xs font-black uppercase tracking-[.14em] text-white">Explore media archive <ArrowRight className="h-4 w-4" /></Link>
+            </div>
           </div>
         </section>
       </main>

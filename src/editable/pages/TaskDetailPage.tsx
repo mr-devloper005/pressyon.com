@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { CSSProperties } from 'react'
 import { notFound } from 'next/navigation'
-import { ArrowLeft, Bookmark, Building2, Camera, CheckCircle2, Download, ExternalLink, FileText, Globe2, Mail, MapPin, MessageCircle, Phone, Tag, UserRound } from 'lucide-react'
+import { ArrowLeft, Bookmark, Building2, Camera, CheckCircle2, Download, ExternalLink, FileText, Globe2, Mail, MapPin, MessageCircle, Phone, Send, Tag, UserRound } from 'lucide-react'
 import { buildPostMetadata, buildTaskMetadata } from '@/lib/seo'
 import { buildPostUrl, fetchArticleComments, fetchTaskPostBySlug, fetchTaskPosts } from '@/lib/task-data'
 import { getTaskConfig, SITE_CONFIG, type TaskKey } from '@/lib/site-config'
@@ -135,13 +135,61 @@ function BackLink({ task }: { task: TaskKey }) {
 function ArticleDetail({ task, post, related, comments }: { task: TaskKey; post: SitePost; related: SitePost[]; comments: Array<{ id: string; name: string; comment: string; createdAt: string }> }) {
   const images = getImages(post)
   const published = post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''
+  if (task === 'mediaDistribution') {
+    return (
+      <section className="media-shell page-fade">
+        <div className="progress-bar" />
+        <header className="bg-white">
+          <div className="media-container py-10 lg:py-14">
+            <BackLink task={task} />
+            <div className="mt-9 grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-end">
+              <div className="hero-reveal">
+                <p className="section-kicker">{categoryOf(post, 'Media Distribution')}</p>
+                <h1 className="mt-5 max-w-5xl text-5xl font-black leading-[.98] tracking-[-.055em] sm:text-6xl lg:text-7xl">{post.title}</h1>
+              </div>
+              <div className="rounded-lg bg-[#eef8e8] p-5">
+                <p className="text-xs font-black uppercase tracking-[.18em] text-[var(--slot4-green)]">Release actions</p>
+                <div className="mt-4 grid gap-3">
+                  <Link href={getTaskConfig(task)?.route || '/'} className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--slot4-accent)] px-4 py-3 text-sm font-black text-white">Back to archive <ArrowLeft className="h-4 w-4" /></Link>
+                  <a href={`mailto:?subject=${encodeURIComponent(post.title)}&body=${encodeURIComponent(`${SITE_CONFIG.baseUrl.replace(/\/$/, '')}${buildPostUrl(task, post.slug)}`)}`} className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-900/10 bg-white px-4 py-3 text-sm font-black">Email release <Send className="h-4 w-4" /></a>
+                  <Link href="/search" className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-900/10 bg-white px-4 py-3 text-sm font-black">Search related <ExternalLink className="h-4 w-4" /></Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {images[0] ? (
+          <figure className="image-zoom media-container reveal-up overflow-hidden rounded-lg bg-white shadow-[0_24px_80px_rgba(20,34,53,.1)]">
+            <img src={images[0]} alt="" className="max-h-[560px] w-full object-cover" />
+          </figure>
+        ) : null}
+
+        <div className="media-container grid gap-10 py-12 lg:grid-cols-[minmax(0,760px)_320px] lg:py-16">
+          <article className="reveal-up rounded-lg bg-white p-6 shadow-[0_18px_55px_rgba(20,34,53,.08)] sm:p-9">
+            <BodyContent post={post} />
+            <EditableComments slug={post.slug} comments={comments} />
+          </article>
+          <aside className="space-y-5">
+            <RelatedPanel task={task} post={post} related={related} compact />
+            <div className="rounded-lg bg-[#242326] p-6 text-white">
+              <p className="text-xs font-black uppercase tracking-[.18em] text-[var(--slot4-accent)]">Media desk</p>
+              <h2 className="mt-3 text-2xl font-black tracking-[-.04em]">Need this distributed further?</h2>
+              <p className="mt-3 text-sm leading-7 text-white/70">Contact the team for syndication, corrections, or campaign support.</p>
+              <Link href="/contact" className="mt-5 inline-flex rounded-lg bg-[var(--slot4-coral)] px-5 py-3 text-xs font-black uppercase tracking-[.14em] text-white">Contact desk</Link>
+            </div>
+          </aside>
+        </div>
+      </section>
+    )
+  }
   return (
     <section className="bg-[#f7f4ef]">
       <header className="border-b border-black/20">
         <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
           <BackLink task={task} />
           <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t-4 border-black pt-4 text-[11px] font-black uppercase tracking-[0.16em]">
-            <span className="text-[#c92f2f]">{categoryOf(post, 'News')}</span>
+            <span className="text-[var(--slot4-coral)]">{categoryOf(post, 'News')}</span>
             {published ? <time>{published}</time> : null}
           </div>
           <h1 className="editorial-serif mt-6 max-w-6xl text-5xl font-black leading-[0.94] tracking-[-0.055em] sm:text-6xl lg:text-[5.5rem]">{post.title}</h1>
@@ -161,7 +209,7 @@ function ArticleDetail({ task, post, related, comments }: { task: TaskKey; post:
           <BodyContent post={post} />
           <EditableComments slug={post.slug} comments={comments} />
         </article>
-        <div className="border-t-4 border-[#c92f2f] pt-5">
+        <div className="border-t-4 border-[var(--slot4-coral)] pt-5">
           <RelatedPanel task={task} post={post} related={related} />
         </div>
       </div>
@@ -427,7 +475,7 @@ function RelatedPanel({ task, post, related, compact = false }: { task: TaskKey;
 function RelatedCard({ task, post }: { task: TaskKey; post: SitePost }) {
   const image = getImages(post)[0]
   return (
-    <Link href={buildPostUrl(task, post.slug)} className="group flex gap-3 border-t border-black/15 py-3 transition hover:text-[#c92f2f]">
+    <Link href={buildPostUrl(task, post.slug)} className="group flex gap-3 border-t border-black/15 py-3 transition hover:text-[var(--slot4-coral)]">
       {image && task !== 'sbm' ? <img src={image} alt="" className="h-20 w-20 shrink-0 object-cover" /> : <div className="flex h-20 w-20 shrink-0 items-center justify-center bg-black text-white"><FileText className="h-6 w-6" /></div>}
       <div className="min-w-0">
         <h3 className="line-clamp-3 text-sm font-black leading-tight tracking-[-0.03em]">{post.title}</h3>

@@ -1,23 +1,26 @@
 import type { CSSProperties } from 'react'
 
 export const editableRootStyle = {
-  '--slot4-page-bg': '#f7f4ef',
-  '--slot4-page-text': '#111111',
-  '--slot4-panel-bg': '#efeae3',
-  '--slot4-surface-bg': '#fffdfa',
-  '--slot4-muted-text': '#514e49',
-  '--slot4-soft-muted-text': '#77716a',
-  '--slot4-accent': '#c92f2f',
-  '--slot4-accent-fill': '#c92f2f',
-  '--slot4-accent-soft': '#f3d8d3',
-  '--slot4-dark-bg': '#111111',
+  '--slot4-page-bg': '#f6fbf2',
+  '--slot4-page-text': '#142235',
+  '--slot4-panel-bg': '#eaf6df',
+  '--slot4-surface-bg': '#ffffff',
+  '--slot4-muted-text': '#69737f',
+  '--slot4-soft-muted-text': '#89929b',
+  '--slot4-accent': '#18bce2',
+  '--slot4-accent-fill': '#18bce2',
+  '--slot4-accent-soft': '#d9f6fb',
+  '--slot4-coral': '#ff6846',
+  '--slot4-green': '#7cc650',
+  '--slot4-yellow': '#fac936',
+  '--slot4-dark-bg': '#242326',
   '--slot4-dark-text': '#ffffff',
-  '--slot4-media-bg': '#e4e0da',
-  '--slot4-cream': '#f7f4ef',
-  '--slot4-warm': '#fffdfa',
-  '--slot4-lavender': '#c92f2f',
-  '--slot4-gray': '#ece9e4',
-  '--slot4-body-gradient': 'linear-gradient(180deg, #f7f4ef 0%, #fffdfa 52%, #eeeae4 100%)',
+  '--slot4-media-bg': '#e8f4f6',
+  '--slot4-cream': '#f6fbf2',
+  '--slot4-warm': '#ffffff',
+  '--slot4-lavender': '#18bce2',
+  '--slot4-gray': '#eef3ef',
+  '--slot4-body-gradient': 'linear-gradient(180deg, #ffffff 0%, #f6fbf2 48%, #eef8e8 100%)',
 } as CSSProperties
 
 export const editablePalette = {
@@ -50,7 +53,7 @@ export const editablePalette = {
 export const editableDesignContract = {
   shell: {
     page: `min-h-screen ${editablePalette.pageBg} ${editablePalette.pageText}`,
-    section: 'mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-10',
+    section: 'mx-auto w-full max-w-[1180px] px-4 sm:px-6 lg:px-8',
     sectionY: 'py-12 sm:py-16 lg:py-20',
   },
   layout: {
@@ -87,7 +90,7 @@ export const editableDesignContract = {
 
 export const aiLayoutRules = [
   'All visible layout decisions belong inside src/editable; keep data, SEO, API, and route logic untouched.',
-  'Use a publication-style white masthead, black category navigation, red editorial accents, and sharp image-led grids.',
+  'Use a clean media-distribution style with a white masthead, green/cyan/coral accents, normal-width sections, and animated cards.',
   'Keep dynamic post fetching intact and never replace backend posts with mock arrays.',
   'Use postHref() for all post links so route aliases and task-specific detail pages remain functional.',
   'Prioritize readable desktop and mobile layouts with broad story columns and a focused long-form article measure.',
